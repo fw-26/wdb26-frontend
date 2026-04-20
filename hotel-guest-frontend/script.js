@@ -1,6 +1,20 @@
 //const apiUrl = "https://wdb26-exempel-deployment-testing.2.rahtiapp.fi/api/ip";
 const apiUrl = "http://127.0.0.1:8080";
 
+// TEMP flytta till LocalStorage eller liknande:
+const API_KEY = "6023d62bba4d85986b90c30c45a9ff27d722833b71b4a25bffc305443ebb272a";
+
+async function getCurrentGuest() {
+    const res = await fetch(`${apiUrl}/current_guest`,{
+        headers: {'X-API-Key': API_KEY}
+    });
+    const guest = await res.json();
+
+    console.log(guest)
+
+}
+getCurrentGuest();
+
 
 async function getBookings() {
     const res = await fetch(`${apiUrl}/bookings`);
@@ -36,22 +50,7 @@ async function getRooms() {
 }
 getRooms();
 
-async function getGuests() {
-    const res = await fetch(`${apiUrl}/guests`);
-    const guests = await res.json();
 
-    console.log(guests)
-
-    for (guest of guests) {
-        document.getElementById("guest-list").innerHTML += `
-            <option value="${guest.id}">
-                ${guest.firstname} - 
-                ${guest.lastname} (${guest.prev_visits} tidigare besök)
-            </option>
-        `;
-    }
-}
-getGuests();
 
 
 async function saveBooking() {
