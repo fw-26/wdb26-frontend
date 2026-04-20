@@ -30,7 +30,18 @@ async function getBookings() {
     document.getElementById("bookings-list").innerHTML = '';
     for (b of bookings) {
         document.getElementById("bookings-list").innerHTML += `
-            <li>${b.id} - ${b.datefrom} - rum ${b.room_number} - ${b.guest_name} - ${b.nights} nätter, totalt: ${b.total_price} €</li>
+            <li>
+                ${b.id} - ${b.datefrom} - rum ${b.room_number} - ${b.guest_name} - ${b.nights} nätter, totalt: ${b.total_price} €
+                <select id="stars-${b.id}">
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="1">⭐</option>
+                </select>
+            </li>
+
+
         `;
     }
     
@@ -66,6 +77,7 @@ async function saveBooking() {
         datefrom: document.getElementById("datefrom").value,
         dateto: document.getElementById("dateto").value
     }
+    
     const res = await fetch(`${apiUrl}/bookings`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
