@@ -3,7 +3,9 @@ const apiUrl = "http://127.0.0.1:8080";
 
 // TEMP flytta till LocalStorage eller liknande:
 const API_KEY = "6023d62bba4d85986b90c30c45a9ff27d722833b71b4a25bffc305443ebb272a";
+//const API_KEY = "asdasd";
 
+/*
 async function getCurrentGuest() {
     const res = await fetch(`${apiUrl}/current_guest`,{
         headers: {'X-API-Key': API_KEY}
@@ -14,10 +16,13 @@ async function getCurrentGuest() {
 
 }
 getCurrentGuest();
+*/
 
-
+// Hämta nuvarande gästs bokningar
 async function getBookings() {
-    const res = await fetch(`${apiUrl}/bookings`);
+    const res = await fetch(`${apiUrl}/bookings`,{
+        headers: {'X-API-Key': API_KEY}
+    });
     const bookings = await res.json();
 
     console.log(bookings)
