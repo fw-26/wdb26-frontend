@@ -2,7 +2,7 @@
 const apiUrl = "http://127.0.0.1:8080";
 
 // TEMP flytta till LocalStorage eller liknande:
-const API_KEY = "6023d62bba4d85986b90c30c45a9ff27d722833b71b4a25bffc305443ebb272a";
+const API_KEY = "5cd0784529a095c95f51826a4763f0a97adc8adae8d3b67079ccc3eaa311b738";
 //const API_KEY = "asdasd";
 
 /*
@@ -39,6 +39,7 @@ async function getBookings() {
                     <option value="2">⭐⭐</option>
                     <option value="1">⭐</option>
                 </select>
+                <i>${b.info}</i>
             </li>
 
 
@@ -67,20 +68,21 @@ async function getRooms() {
 getRooms();
 
 
-
-
 async function saveBooking() {
 
     const booking = {
         room_id: document.getElementById("room-list").value,
-        guest_id: document.getElementById("guest-list").value,
         datefrom: document.getElementById("datefrom").value,
-        dateto: document.getElementById("dateto").value
+        dateto: document.getElementById("dateto").value,
+        info: document.getElementById("info").value
     }
     
     const res = await fetch(`${apiUrl}/bookings`, { 
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-API-Key': API_KEY
+        },
         body: JSON.stringify(booking)
     });
     const data = await res.json();
