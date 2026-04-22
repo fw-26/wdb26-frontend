@@ -32,7 +32,8 @@ async function getBookings() {
         document.getElementById("bookings-list").innerHTML += `
             <li>
                 ${b.id} - ${b.datefrom} - rum ${b.room_number} - ${b.guest_name} - ${b.nights} nätter, totalt: ${b.total_price} €
-                <select id="stars-${b.id}">
+                <select id="stars-${b.id}" onchange="stars(${b.id}, this.value)">
+                    <option value="" disabled selected>-- Hur lyckades vi?</option>
                     <option value="5">⭐⭐⭐⭐⭐</option>
                     <option value="4">⭐⭐⭐⭐</option>
                     <option value="3">⭐⭐⭐</option>
@@ -89,6 +90,19 @@ async function saveBooking() {
 
     console.log(data);
     getBookings();
+}
+
+async function stars(id, stars) {
+    const res = await fetch(`${apiUrl}/bookings/${id}`, { 
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-API-Key': API_KEY
+        },
+        body: JSON.stringify({stars: stars})
+    });
+    const data = await res.json();
+    console.log(data)
 }
 
 document.getElementById('btn-save').addEventListener('click', saveBooking);
